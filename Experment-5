@@ -1,0 +1,9 @@
+from sklearn.metrics.pairwise import cosine_similarity
+vector1 = [[1, 2, 3, 4]]
+vector2 = [[2, 3, 4, 5]]
+similarity = cosine_similarity(vector1, vector2)
+print("Cosine Similarity:", similarity[0][0])
+if similarity[0][0] > 0.8:
+    print("The two documents are highly similar.")
+else:
+    print("The two documents are not highly similar.")
