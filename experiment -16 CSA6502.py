@@ -1,0 +1,28 @@
+from sentence_transformers import SentenceTransformer
+from sklearn.metrics.pairwise import cosine_similarity
+model = SentenceTransformer("all-MiniLM-L6-v2")
+documents = [
+    "Machine learning is a branch of artificial intelligence.",
+    "Python is widely used for data science and machine learning.",
+    "Neural networks are commonly used in deep learning.",
+    "Football is a popular sport played around the world.",
+    "Artificial intelligence enables computers to perform intelligent tasks."
+]
+query = "What is artificial intelligence?"
+document_embeddings = model.encode(documents)
+query_embedding = model.encode([query])
+similarity_scores = cosine_similarity(
+    query_embedding,
+    document_embeddings
+)[0]
+ranked_results = sorted(
+    zip(documents, similarity_scores),
+    key=lambda x: x[1],
+    reverse=True
+)
+print("Query:", query)
+print("\nSemantic Search Results:\n")
+
+for rank, (document, score) in enumerate(ranked_results, start=1):
+    print(f"{rank}. {document}")
+    print(f"   Similarity Score: {score:.4f}")
